@@ -89,7 +89,7 @@ namespace ProductWebAPI.Controllers
             }
         }
 
-        // PUT api/Books/5
+        // PUT api/products/5
         // UPDATE
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] Product product)
