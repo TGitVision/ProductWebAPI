@@ -13,6 +13,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.SqlServer;
 using ProductWebAPI.Models;
+using ProductWebAPI.Interfaces;
+using ProductWebAPI.Repositories;
 
 namespace ProductWebAPI
 {
@@ -35,6 +37,8 @@ namespace ProductWebAPI
             (
                 option => option.UseSqlServer(Configuration.GetConnectionString("APIDemo"))                
             );
+
+            services.AddTransient<IProductRepo, ProductRepo>();
 
         }
 

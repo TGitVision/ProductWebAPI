@@ -60,5 +60,93 @@ namespace ProductWebAPI.Controllers
             }
         }
 
+        // POST api/<controller>
+        [HttpPost]
+        public IActionResult Post([FromBody] Product product)
+        {
+            try
+            {
+                product = _productRepo.InsertProduct(product);
+
+                if (product != null)
+                {
+
+                    string strRequestUri = Request.Host + "/" + Request.PathBase;
+                    var message = Created(strRequestUri + "/" + product.productID.ToString(), product);
+                    return message;
+
+                }
+                else
+                {
+
+                    return BadRequest("Product with Id = " + product.productID.ToString() + " not Inserted.");
+
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+        // PUT api/Books/5
+        // UPDATE
+        [HttpPut("{id}")]
+        public IActionResult Put(int id, [FromBody] Product product)
+        {
+            try
+            {
+
+                product = _productRepo.UpdateProduct(product);
+
+                if (product != null)
+                {
+
+                    string strRequestUri = Request.Host + "/" + Request.PathBase;
+                    var message = Created(strRequestUri + "/" + product.productID.ToString(), product);
+                    return message;
+
+                }
+                else
+                {
+
+                    return BadRequest("Product with Id = " + id.ToString() + " not found to Update.");
+
+                }
+
+            }
+
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex);
+
+            }
+
+        }
+
+
+        // DELETE api/<controller>/5
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+
+            Product product = null;
+
+            product = _productRepo.DeleteProduct(id);
+
+            if (product != null)
+            {
+                return Ok(product);
+            }
+            else
+            {
+
+                return NotFound("Product with Id = " + id.ToString() + " not found to Delete.");
+
+            }
+
+        }
+
     }
 }
